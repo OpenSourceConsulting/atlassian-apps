@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="icon" href="favicon.ico">
+
+    <title>My Web</title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="resources/bower_components/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="http://netdna.bootstrapcdn.com/font-awesome/3.0.2/css/font-awesome.css" rel="stylesheet">
+    
+
+    <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+    <link href="resources/bower_components/bootstrap/assets/css/ie10-viewport-bug-workaround.css" rel="stylesheet">
+
+    <!-- Custom styles for this template -->
+    <link href="resources/css/starter-template2.css" rel="stylesheet">
+
+    <!-- Just for debugging purposes. Don't actually copy these 2 lines! -->
+    <!--[if lt IE 9]><script src="resources/bower_components/bootstrap/assets/js/ie8-responsive-file-warning.js"></script><![endif]-->
+    <script src="resources/bower_components/bootstrap/assets/js/ie-emulation-modes-warning.js"></script>
+
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+  </head>
+
+  <body>
+
+    <nav class="navbar navbar-inverse navbar-fixed-top">
+      <div class="container">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="#">My Web</a>
+        </div>
+        <div id="navbar" class="collapse navbar-collapse">
+          <ul class="nav navbar-nav">
+            <li class="active"><a href="#">Home</a></li>
+            <li><a href="#about">About</a></li>
+            <li><a href="#contact">Contact</a></li>
+          </ul>
+        </div><!--/.nav-collapse -->
+      </div>
+    </nav>
+
+    <div class="container">
+
+      <div class="starter-template">
+        <h1>Jira REST APIs 연동 테스트</h1>
+        
+      </div>
+      
+      <button id="loadIssues" class="btn btn-primary btn-sm has-spinner">Load Issues<span class="spinner"><i class="icon-spin icon-refresh"></i></span></button>
+      <div class="divTbl">
+      	<table id="issuesTbl" class="table">
+			<caption>Jira REST APIs를 통해 이슈 목록을 가져온다.</caption>
+			<thead>
+				<tr>
+					<th width="10%">#</th>
+					<th width="10%">T</th>
+					<th width="10%">Key</th>
+					<th width="40%">Summary</th>
+					<th width="20%">Assignee</th>
+					<th width="10%">Status</th>
+				</tr>
+			</thead>
+			<tbody>
+				<!-- 
+				<tr>
+					<th scope="row">1</th>
+					<td>Mark</td>
+					<td>Otto</td>
+					<td>@mdo</td>
+					<td>@mdo</td>
+					<td>@mdo</td>
+				</tr>
+	 			-->
+	 		</tbody>
+		</table>
+		</div>
+      
+    </div><!-- /.container -->
+
+
+    <!-- Bootstrap core JavaScript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <!-- 
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+     -->
+    <script src="http://code.jquery.com/jquery-latest.min.js" type="text/javascript"></script>
+    <script>window.jQuery || document.write('<script src="resources/bower_components/bootstrap/assets/js/vendor/jquery.min.js"><\/script>')</script>
+    <script src="resources/bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+    <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+    <script src="resources/bower_components/bootstrap/assets/js/ie10-viewport-bug-workaround.js"></script>
+    <script src="resources/js/jquery.isloading.min.js"></script>
+    <script>
+	    $( document ).ready(function() {
+	    	
+	    	$( "#loadIssues" ).click(function( event ) {
+	    	    //alert("click!!!");
+	    	    $('#issuesTbl > tbody > tr').remove();
+	    	    
+	    		var request = $.ajax({
+	    			  method : "GET",
+					  url: "http://localhost:8080/jira/rest/api/2/search",
+					  data: {jql:"assignee=admin"},
+					  dataType: "json"
+	    		});
+	    		/*
+	    		$( 'div .divTbl' ).isLoading({
+                    text:       "Loading",
+                    position:   "overlay"
+                });
+	    		*/
+	    		$(this).toggleClass('active');
+	    		
+	    		request.done(function( responseJson ) {
+    			    //alert(responseJson);
+    				
+    			    //$( "div .divTbl" ).isLoading('hide');
+    			    $("#loadIssues").toggleClass('active');
+    			    
+    			  	$.each(responseJson.issues, function( index, issue ) {
+    			  		
+    			  		var typeImg = '<img src="'+issue.fields.issuetype.iconUrl+'" height="16" width="16" border="0" align="absmiddle">';
+    			  		var issueLink = '<a href="http://localhost:2990/jira/browse/'+ issue.key +'">' + issue.fields.summary + '</a>';
+    			  		var assignee = issue.fields.assignee.displayName;
+    			  		
+    			  		$('#issuesTbl > tbody:last').append('<tr><th>' + index + '</th><td>' + typeImg + '</td><td>' + issue.key + '</td><td>' + issueLink + '</td><td>' + assignee + '</td><td>' + issue.fields.status.name + '</td></tr>');
+					});
+	    			
+    			});
+    			 
+    			request.fail(function( jqXHR, textStatus ) {
+    				//$( "div .divTbl" ).isLoading('hide');
+    				$("#loadIssues").toggleClass('active');
+    				
+    			    alert( "Request failed: " + textStatus );
+    			});
+	    	});
+	    });
+    </script>
+  </body>
+</html>

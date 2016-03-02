@@ -1,0 +1,2 @@
+com.atlassian.tutorial.jira.telegm.impl.IssueCreatedResolvedListener#eventListener
+com.atlassian.tutorial.jira.telegm.impl.MyPluginComponentImpl#myPluginComponent

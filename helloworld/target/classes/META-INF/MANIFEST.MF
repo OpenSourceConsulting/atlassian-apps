@@ -1,0 +1,35 @@
+Manifest-Version: 1.0
+Atlassian-Build-Date: 2016-02-29T17:28:03+0900
+Atlassian-Plugin-Key: com.example.jira.helloworld
+Bnd-LastModified: 1456734485631
+Build-Jdk: 1.8.0_60
+Built-By: Administrator
+Bundle-Description: This is the com.example.jira:helloworld plugin for A
+ tlassian JIRA.
+Bundle-DocURL: http://www.example.com/
+Bundle-ManifestVersion: 2
+Bundle-Name: helloworld
+Bundle-SymbolicName: com.example.jira.helloworld
+Bundle-Vendor: Example Company
+Bundle-Version: 1.0.0.SNAPSHOT
+Created-By: Apache Maven Bundle Plugin
+Export-Package: com.example.jira.helloworld.api;version="1.0.0"
+Import-Package: org.springframework.osgi.service.exporter.support;resolu
+ tion:=optional,org.springframework.osgi.service.importer.support;resolu
+ tion:=optional,org.eclipse.gemini.blueprint.service.exporter;resolution
+ :=optional,org.eclipse.gemini.blueprint.service.exporter.support;resolu
+ tion:=optional,org.eclipse.gemini.blueprint.service.importer.support;re
+ solution:=optional,com.atlassian.plugin.osgi.factory,com.atlassian.sal.
+ api,com.example.jira.helloworld.api;version="[1.0,2)",com.google.common
+ .base,com.google.common.collect,javax.inject,org.apache.commons.lang,or
+ g.apache.commons.logging,org.osgi.framework,org.osgi.util.tracker,org.s
+ pringframework.beans,org.springframework.beans.factory,org.springframew
+ ork.beans.factory.annotation,org.springframework.beans.factory.config,o
+ rg.springframework.beans.factory.parsing,org.springframework.beans.fact
+ ory.support,org.springframework.beans.factory.xml,org.springframework.c
+ ontext.annotation,org.springframework.stereotype,org.springframework.ut
+ il,org.w3c.dom
+Originally-Created-By: Apache Maven Bundle Plugin
+Require-Capability: osgi.ee;filter:="(&(osgi.ee=JavaSE)(version=1.7))"
+Spring-Context: *
+Tool: Bnd-2.4.1.201501161923

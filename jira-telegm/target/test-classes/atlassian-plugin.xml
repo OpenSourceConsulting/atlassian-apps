@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<atlassian-plugin key="com.atlassian.tutorial.jira-telegm-tests" name="jira-telegm" plugins-version="2">
+  <plugin-info>
+    <description>This is the com.atlassian.tutorial:jira-telegm plugin for Atlassian JIRA.</description>
+    <version>1.0.0-SNAPSHOT</version>
+    <vendor name="Example Company" url="http://www.example.com/"/>
+  </plugin-info>
+  <!-- from our base plugin -->
+  <component-import key="myComponent" interface="com.atlassian.tutorial.jira.telegm.api.MyPluginComponent"/>
+  <!-- from the product container -->
+  <component-import key="applicationProperties" interface="com.atlassian.sal.api.ApplicationProperties"/>
+  <component key="my-component-wired-test" class="it.com.atlassian.tutorial.jira.telegm.MyComponentWiredTest" public="true">
+    <interface>it.com.atlassian.tutorial.jira.telegm.MyComponentWiredTest</interface>
+    <service-properties>
+      <entry key="inProductTest" value="true"/>
+    </service-properties>
+  </component>
+</atlassian-plugin>

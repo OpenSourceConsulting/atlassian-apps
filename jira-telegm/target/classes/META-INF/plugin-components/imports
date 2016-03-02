@@ -1,0 +1,2 @@
+com.atlassian.event.api.EventPublisher
+com.atlassian.sal.api.ApplicationProperties
